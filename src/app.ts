@@ -7,4 +7,8 @@ const objtest = {
   tonnikala: "kalatonni",
 };
 
+const { hello } = objtest;
+
+console.log(hello);
+
 console.log(objtest);
