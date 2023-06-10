@@ -1,14 +1,3 @@
-const test: string = "hello";
+import { ScanWallets } from "./Scanner/scanWallets";
 
-console.log(test);
-
-const objtest = {
-  hello: "test",
-  tonnikala: "kalatonni",
-};
-
-const { hello } = objtest;
-
-console.log(hello);
-
-console.log(objtest);
+void ScanWallets();
