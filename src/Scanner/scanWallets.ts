@@ -1,26 +1,30 @@
 import env from "../../environment";
-import { type Eventti } from "../Models/models";
+import type { RatelessEvent } from "../Models/models";
 import { quitRedis, initRedis } from "../Utils/redis";
+import { printEvents } from "../Utils/utils";
 import { fetchTransactions } from "./fetchTransactions";
 import { prepareTransactions } from "./prepareTransactions";
+import type { Transaction } from "./scanner";
+import { transactionsToEvents } from "./transactionsToEvents";
 
-export async function ScanWallets(): Promise<Eventti[]> {
-  const events: Eventti[] = [];
+export const debugArray: string[] = [];
+
+export async function ScanWallets(): Promise<RatelessEvent[]> {
+  const trxs: Transaction[] = [];
 
   await initRedis();
+
   for (const wallet of env.WALLETS) {
     const fetchedTransactions = await fetchTransactions(wallet);
-    const preparedTransactions = prepareTransactions(fetchedTransactions);
-    console.log(preparedTransactions.length);
-    // events.push(...createEventsFromTransactions(preparedTransactions));
-    // const preparedTransactions = prepareTransactions(transactions);
-    // const groupedTransactions = groupTransactions(preparedTransactions);
-    // transactions.push(
-    // ...generateFinalTransactionsFromGroups(groupedTransactions)
-    // );
+    trxs.push(...fetchedTransactions);
   }
+
+  const preparedTransactions = prepareTransactions(trxs);
+  const ratelessEvents: RatelessEvent[] = transactionsToEvents(preparedTransactions);
 
   await quitRedis();
 
-  return events;
+  printEvents(ratelessEvents);
+
+  return ratelessEvents;
 }

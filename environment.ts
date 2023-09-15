@@ -23,6 +23,7 @@ interface EnvVariables {
   REALIZE_AAVE: boolean;
   REDIS_PORT: number;
   WALLETS: string[];
+  MINING_WALLETS: string[];
 }
 
 const env: EnvVariables = {
@@ -47,6 +48,7 @@ const env: EnvVariables = {
   REALIZE_AAVE: process.env.REALIZE_AAVE?.toLowerCase() === "true",
   REDIS_PORT: Number(process.env.REDIS_PORT),
   WALLETS: process.env.WALLETS?.split(",") as string[],
+  MINING_WALLETS: process.env.MINING_WALLETS?.split(",") as string[],
 };
 
 export default env;

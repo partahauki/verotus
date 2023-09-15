@@ -1,22 +1,15 @@
 export type Source = "Binance" | "Celcius" | "Ethereum" | "Polygon" | "BSC";
 
-export type TransactionType =
-  | "Withdraw"
-  | "Deposit"
-  | "Mining"
-  | "Skip"
-  | "Distribution";
-
 export type ContractType =
-  | "LiquidPool"
-  | "LiquidPool/Swap"
-  | "Distribution"
-  | "Gauge"
-  | "Gauged/Swap"
-  | "Swap"
   | "AAVE"
-  | "Ignore"
-  | "Note";
+  | "distribution"
+  | "gauge"
+  | "gauged/swap"
+  | "ignore"
+  | "liquidPool"
+  | "liquidPool/swap"
+  | "swap"
+  | "note";
 
 export interface Contract {
   name: string;
@@ -24,16 +17,28 @@ export interface Contract {
   type: ContractType;
 }
 
-export interface Eventti {
+export type EventType =
+  | "buy"
+  | "distribution"
+  | "fee"
+  | "future"
+  | "remuneration"
+  | "sell"
+  | "skip"
+  | "withdraw";
+
+export interface RatelessEvent {
   hash: string;
-  source: Source;
-  timestring: string;
-  // todo: symbolit haetaan jostain enumista?
+  source: string;
+  timestamp: string;
   symbol: string;
-  event_type: TransactionType;
-  contract: Contract;
+  eventType: EventType;
   amount: number;
+  contract: Contract | null;
+  notes: string[];
+}
+
+export interface Event extends RatelessEvent {
   rate: number;
   value: number;
-  notes: string[];
 }

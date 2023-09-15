@@ -1,4 +1,4 @@
-import { Source } from "../Models/models";
+import { Contract, Source } from "../Models/models";
 
 export type BlockchainName = "Ethereum" | "Polygon" | "BSC";
 export type TrxType = "normal" | "internal" | "erc20";
