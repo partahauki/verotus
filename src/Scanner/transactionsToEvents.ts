@@ -98,17 +98,16 @@ function determineEventType(trx: Required<Transaction>, contract: Contract | nul
   const wallets = env.WALLETS;
   let baseType: "buy" | "sell" | "skip" | "remuneration";
 
-  console.log(contract);
-  console.log(wallets);
-  console.log(trx);
+  const toAddress = trx.to.toLocaleLowerCase();
+  const fromAddress = trx.from.toLocaleLowerCase();
 
-  if (wallets.includes(trx.to) && env.MINING_WALLETS.includes(trx.from)) {
+  if (wallets.includes(toAddress) && env.MINING_WALLETS.includes(fromAddress)) {
     baseType = "remuneration";
-  } else if (wallets.includes(trx.from) && wallets.includes(trx.to)) {
+  } else if (wallets.includes(fromAddress) && wallets.includes(toAddress)) {
     baseType = "skip";
-  } else if (wallets.includes(trx.to)) {
+  } else if (wallets.includes(toAddress)) {
     baseType = "buy";
-  } else if (wallets.includes(trx.from)) {
+  } else if (wallets.includes(fromAddress)) {
     baseType = "sell";
   } else {
     throw Error(`Cannot determine basetype from transaction: ${JSON.stringify(trx)}`);

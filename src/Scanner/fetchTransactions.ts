@@ -39,9 +39,7 @@ export async function getBlockRangeInTaxYear(
   apiKey: string
 ): Promise<[string, string]> {
   const taxYearStart = DateTime.fromObject({ year: env.TAX_YEAR }).toSeconds();
-  const taxYearEnd = DateTime.fromObject({
-    year: env.TAX_YEAR + 1,
-  }).toSeconds();
+  const taxYearEnd = DateTime.fromObject({ year: env.TAX_YEAR + 1 }).toSeconds();
   const urlStart = `https://${urlBase}/api?module=block&action=getblocknobytime&timestamp=${taxYearStart}&closest=after&apikey=${apiKey}`;
   const urlEnd = `https://${urlBase}/api?module=block&action=getblocknobytime&timestamp=${taxYearEnd}&closest=before&apikey=${apiKey}`;
 

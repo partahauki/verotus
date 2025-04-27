@@ -47,8 +47,8 @@ const env: EnvVariables = {
   PRINT_MOTHERBRAIN_DEBUGSTACK: process.env.PRINT_MOTHERBRAIN_DEBUGSTACK?.toLowerCase() === "true",
   REALIZE_AAVE: process.env.REALIZE_AAVE?.toLowerCase() === "true",
   REDIS_PORT: Number(process.env.REDIS_PORT),
-  WALLETS: process.env.WALLETS?.split(",") as string[],
-  MINING_WALLETS: process.env.MINING_WALLETS?.split(",") as string[],
+  WALLETS: process.env.WALLETS?.toLocaleLowerCase().split(",") as string[],
+  MINING_WALLETS: process.env.MINING_WALLETS?.toLocaleLowerCase().split(",") as string[],
 };
 
 export default env;
